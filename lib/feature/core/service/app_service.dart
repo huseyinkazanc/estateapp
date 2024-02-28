@@ -44,7 +44,7 @@ class AppService extends ChangeNotifier {
       {
         'name': name,
         'surname': surname,
-        'email': email,
+        'emaddil': email,
       }
     ]);
 
