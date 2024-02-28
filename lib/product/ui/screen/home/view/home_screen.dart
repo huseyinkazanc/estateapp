@@ -1,7 +1,13 @@
 import 'package:estate_flutter_app/feature/constant/color/estate_color.dart';
-import 'package:estate_flutter_app/feature/service/app_service.dart';
-import 'package:estate_flutter_app/product/ui/screen/auth/login/view/login_screen.dart';
+import 'package:estate_flutter_app/feature/constant/string/estate_string.dart';
+import 'package:estate_flutter_app/feature/core/service/app_service.dart';
+import 'package:estate_flutter_app/feature/widget/custom_screen.dart';
+import 'package:estate_flutter_app/feature/widget/esetate_listing_property_card.dart';
+import 'package:estate_flutter_app/feature/widget/estate_contact_card.dart';
+import 'package:estate_flutter_app/feature/widget/estate_outlined_button.dart';
+import 'package:estate_flutter_app/feature/widget/estate_property_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,17 +23,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Center(
-            child: ElevatedButton(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            EstateOutlinedButton(
                 onPressed: () {
-                  appService.logoutUser();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomScreen()));
                 },
-                child: const Text("çıkış yap")),
-          )
-        ],
+                text: EstateString.appTitleText),
+            EstatePropertyCard(
+              detailButton: EstateOutlinedButton(
+                iconData: Icons.home_outlined,
+                onPressed: () {
+                  appService.logoutUser(context, '/login');
+                },
+                text: EstateString.appTitleText,
+              ),
+            ),
+            const EstateListingPropertyCard(),
+            const EstateContactCard(),
+          ],
+        ),
       ),
     );
   }

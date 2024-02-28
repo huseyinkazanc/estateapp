@@ -35,9 +35,32 @@ class AppService extends ChangeNotifier {
     }
   }
 
-  Future<void> logoutUser() async {
+  Future<void> registerUserAndSaveToSupabase(name, surname, email, password) async {
+    // Register the user with Supabase
+    final result = await registerUser(email, password);
+
+    // User registration successful, save additional user data to Supabase database
+    final response = await supabase.from('users').upsert([
+      {
+        'name': name,
+        'surname': surname,
+        'email': email,
+      }
+    ]);
+
+    if (response.error == null) {
+      // Data saved successfully
+      // Navigate to the home screen or perform any other action
+    } else {
+      // Error occurred while saving data
+      // Handle the error
+    }
+  }
+
+  Future<void> logoutUser(context, String page) async {
     if (supabase.auth.currentUser != null) {
       await supabase.auth.signOut();
+      context.go(page);
     } else {
       print("kullanıcı zaten çıkış yapmış");
     }

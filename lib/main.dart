@@ -1,6 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:estate_flutter_app/product/ui/screen/auth/login/view/login_screen.dart';
-import 'package:estate_flutter_app/product/ui/screen/home/view/home_screen.dart';
+import 'package:estate_flutter_app/feature/core/router/app_router.dart';
+import 'package:estate_flutter_app/feature/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,7 +18,7 @@ void main() async {
 final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
-  final currentUser = Supabase.instance.client.auth.currentUser;
+  final currentUser = supabase.auth.currentUser;
 
   MyApp({
     super.key,
@@ -26,27 +26,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isUserAuthenticated = currentUser != null;
+
     return AdaptiveTheme(
-      light: ThemeData.light(),
-      dark: ThemeData.dark(),
-      initial: AdaptiveThemeMode.light,
-      builder: (theme, darkTheme) => MaterialApp(
+      light: AppTheme().light,
+      dark: AppTheme().dark,
+      initial: AdaptiveThemeMode.system,
+      builder: (theme, darkTheme) => MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: theme,
         darkTheme: darkTheme,
-        home: currentUserControl(),
+        routerConfig: AppRouter(isUserAuthenticated).goRoutes,
       ),
     );
-  }
-
-  Widget currentUserControl() {
-    if (currentUser == null) {
-      print(' kullanıcı $currentUser');
-      return const LoginScreen();
-    } else {
-      print(' kullanıcı $currentUser');
-      return const HomeScreen();
-    }
   }
 }

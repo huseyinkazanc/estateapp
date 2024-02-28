@@ -1,3 +1,4 @@
+import 'package:estate_flutter_app/feature/resource/estate_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
@@ -16,18 +17,19 @@ class AuthTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 59,
-      child: TextFormField(
-        obscureText: obsecureText ?? false,
-        keyboardType: TextInputType.emailAddress,
-        controller: controller,
-        validator: validator,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          hintText: hintText,
-          prefixIcon: Icon(prefixIcon),
-        ),
+    return TextFormField(
+      obscureText: obsecureText ?? false,
+      keyboardType: TextInputType.emailAddress,
+      controller: controller,
+      style: EstateTextStyles.regular.copyWith(
+        letterSpacing: 0.75,
+      ),
+      validator: validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        hintText: hintText,
+        prefixIcon: Icon(prefixIcon),
       ),
     );
   }

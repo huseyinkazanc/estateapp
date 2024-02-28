@@ -1,6 +1,6 @@
 import 'package:estate_flutter_app/feature/constant/string/estate_string.dart';
 import 'package:estate_flutter_app/feature/extension/widget_extension.dart';
-import 'package:estate_flutter_app/feature/service/app_service.dart';
+import 'package:estate_flutter_app/feature/core/service/app_service.dart';
 import 'package:estate_flutter_app/feature/widget/estate_button.dart';
 import 'package:estate_flutter_app/product/ui/screen/auth/register/view/register_screen.dart';
 import 'package:estate_flutter_app/product/ui/screen/auth/widget/auth_icon_button.dart';
@@ -44,20 +44,23 @@ class _LoginScreenState extends State<LoginScreen> {
             AuthTextField(
               controller: emailController,
               hintText: EstateString.loginHintEmailText,
-              prefixIcon: Icons.email,
+              prefixIcon: Icons.person_outlined,
             ).paddingOnly(bottom: 8),
             AuthTextField(
               obsecureText: showPassword,
               controller: passwordController,
               hintText: EstateString.loginHintPasswordText,
-              prefixIcon: Icons.email,
+              prefixIcon: Icons.email_outlined,
               validator: (value) {
                 if (value!.length < 6) {
                   return 'Parolanız en az 6 karakter olmalı.';
                 }
                 return null;
               },
-            ).paddingOnly(bottom: 8),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

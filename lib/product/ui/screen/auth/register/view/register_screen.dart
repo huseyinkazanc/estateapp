@@ -1,6 +1,6 @@
 import 'package:estate_flutter_app/feature/constant/string/estate_string.dart';
 import 'package:estate_flutter_app/feature/extension/widget_extension.dart';
-import 'package:estate_flutter_app/feature/service/app_service.dart';
+import 'package:estate_flutter_app/feature/core/service/app_service.dart';
 import 'package:estate_flutter_app/feature/widget/estate_button.dart';
 import 'package:estate_flutter_app/product/ui/screen/auth/login/view/login_screen.dart';
 import 'package:estate_flutter_app/product/ui/screen/auth/widget/auth_textfield.dart';
@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final AppService appService = AppService();
+  bool showPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -52,22 +53,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       prefixIcon: Icons.email_outlined)
                   .paddingOnly(bottom: 8),
               AuthTextField(
-                      controller: passwordController,
-                      hintText: EstateString.registerHintPasswordText,
-                      prefixIcon: Icons.lock_outline)
-                  .paddingOnly(bottom: 8),
+                obsecureText: showPassword,
+                controller: passwordController,
+                hintText: EstateString.registerHintPasswordText,
+                prefixIcon: Icons.lock_outline,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "boş olamaz";
+                  }
+                  return null;
+                },
+              ).paddingOnly(bottom: 8),
               AuthTextField(
+                      obsecureText: showPassword,
                       controller: confirmPasswordController,
                       hintText: EstateString.registerHintConfirmPasswordText,
                       prefixIcon: Icons.lock_outline)
                   .paddingOnly(bottom: 8),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text(EstateString.registerTermsOfText), Text(EstateString.authShowPasswordText)],
+                children: [
+                  const Text(EstateString.registerTermsOfText),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
+                      },
+                      child: const Text(EstateString.authShowPasswordText))
+                ],
               ).paddingOnly(bottom: 8),
               EstateButton(
                 onPressed: () async {
-                  await appService.registerUser(emailController.text, passwordController.text);
+                  await appService.registerUserAndSaveToSupabase(
+                      nameController.text, surnameController.text, emailController.text, passwordController.text);
                 },
                 text: EstateString.registerButtonText,
               ).paddingOnly(bottom: 8),
