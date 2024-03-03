@@ -4,7 +4,8 @@ class EstateString {
   static const String authLoginText = 'Login';
   //login strings
   static const String appTitleText = 'Estate';
-  static const String loginTitleOneText = 'Let\'s Sign In';
+  static const String loginTitleOneText = 'Let\'s';
+  static const String loginTitleOneText_ = ' Sign In';
   static const String loginSubTitleTwoText = 'quis nostrud exercitation ullamco laboris nisi ut';
   static const String loginHintEmailText = 'Email';
   static const String loginHintPasswordText = 'Password';
