@@ -1,3 +1,5 @@
+import 'package:estate_flutter_app/feature/constant/color/estate_color.dart';
+import 'package:estate_flutter_app/feature/constant/font/estate_font.dart';
 import 'package:estate_flutter_app/feature/constant/string/estate_string.dart';
 import 'package:estate_flutter_app/feature/extension/widget_extension.dart';
 import 'package:estate_flutter_app/feature/core/service/app_service.dart';
@@ -35,8 +37,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(EstateString.loginTitleOneText).paddingOnly(bottom: 8),
-              const Text(EstateString.loginSubTitleTwoText).paddingOnly(bottom: 8),
+              Row(
+                children: [
+                  Text(
+                    EstateString.loginTitleOneText,
+                    style: TextStyle(
+                      fontSize: EstateFont.fontSizeTwentyFour,
+                    ),
+                  ),
+                  Text(
+                    EstateString.loginTitleOneText_,
+                    style: TextStyle(color: EstateColor.stringColor, fontSize: EstateFont.fontSizeTwentyFour),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                EstateString.loginSubTitleTwoText,
+                style: TextStyle(fontSize: EstateFont.fontSizeEighteen),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               AuthTextField(
                       controller: nameController,
                       hintText: EstateString.registerHintNameText,
